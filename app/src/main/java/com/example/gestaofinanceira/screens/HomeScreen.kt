@@ -40,6 +40,7 @@ fun HomeScreen(
     onAdicionarClick: () -> Unit = {},
     onHistoricoClick: () -> Unit = {},
     onConfiguracaoClick: () -> Unit = {}
+
 ) {
     Scaffold(
         containerColor = FundoHome,

@@ -1,30 +1,35 @@
-package com.example.tccfinanceiro
+
+package com.example.gestaofinanceira.screens
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.gestaofinanceira.screens.HomeScreen
+
+import com.example.tccfinanceiro.CadastroScreen
+import com.example.tccfinanceiro.Loginscreen
 import com.example.tccfinanceiro.MetasScreen
-// Importe as outras telas conforme for criando:
-// import com.example.gestaofinanceira.screens.CadastroScreen
-// import com.example.gestaofinanceira.screens.Loginscreen
-// import com.example.gestaofinanceira.screens.TransacoesScreen
+import com.example.tccfinanceiro.LancamentoScreen
+
 
 @Composable
 fun AppNavigation() {
+
     val navController = rememberNavController()
 
     NavHost(
         navController = navController,
         startDestination = "login"
     ) {
-        // Tela de login
+
+        // LOGIN
         composable("login") {
             Loginscreen(
                 onLoginClick = {
                     navController.navigate("home") {
-                        popUpTo("login") { inclusive = true }
+                        popUpTo("login") {
+                            inclusive = true
+                        }
                     }
                 },
                 onCadastroClick = {
@@ -33,7 +38,7 @@ fun AppNavigation() {
             )
         }
 
-        // Tela de cadastro
+        // CADASTRO
         composable("cadastro") {
             CadastroScreen(
                 onVoltarClick = {
@@ -49,17 +54,17 @@ fun AppNavigation() {
             )
         }
 
-        // Tela inicial (Home) com todos os links corretos dentro da chave
+        // HOME
         composable("home") {
             HomeScreen(
                 onMetasClick = {
                     navController.navigate("metas")
                 },
+                onAdicionarClick = {
+                    navController.navigate("lancamento")
+                },
                 onTransacoesClick = {
                     navController.navigate("transacoes")
-                },
-                onAdicionarClick = {
-                    navController.navigate("adicionar")
                 },
                 onHistoricoClick = {
                     navController.navigate("historico")
@@ -70,8 +75,8 @@ fun AppNavigation() {
             )
         }
 
-        // Tela de Metas (agora dentro do NavHost corretamente)
-        composable(route = "metas") {
+        // METAS
+        composable("metas") {
             MetasScreen(
                 onVoltarClick = {
                     navController.popBackStack()
@@ -79,22 +84,54 @@ fun AppNavigation() {
             )
         }
 
-        // Exemplo para as próximas telas que ainda vai criar:
-        composable(route = "transacoes") {
-            // TransacoesScreen(onVoltarClick = { navController.popBackStack() })
+        // LANÇAMENTO
+        composable("lancamento") {
+            LancamentoScreen(
+                onVoltarClick = {
+                    navController.popBackStack()
+                },
+                onSalvarClick = { lancamento ->
+                    navController.popBackStack()
+                }
+            )
         }
 
-        composable(route = "adicionar") {
-            // AdicionarScreen(onVoltarClick = { navController.popBackStack() })
+        // TRANSAÇÕES
+        composable("transacoes") {
+            TransacoesScreen(
+                onNovaTransacaoClick = {
+                    navController.navigate("novaTransacao")
+                }
+            )
         }
 
-        composable(route = "historico") {
-            // HistoricoScreen(onVoltarClick = { navController.popBackStack() })
+        // NOVA TRANSAÇÃO
+        composable("novaTransacao") {
+            NovaTransacaoScreen(
+                onVoltarClick = {
+                    navController.popBackStack()
+                }
+            )
         }
 
-        composable(route = "configuracao") {
-            // ConfiguracaoScreen(onVoltarClick = { navController.popBackStack() })
-
+        // HISTÓRICO
+        composable("historico") {
+            HistoricoScreen(
+                onVoltarClick = {
+                    navController.popBackStack()
+                }
+            )
         }
-    } // Fim do NavHost correto
-}
+
+        // CONFIGURAÇÕES
+        composable("configuracao") {
+            ConfiguracaoScreen (onVoltarClick = {
+                navController.popBackStack()
+            }
+
+            )
+
+            }
+        }
+    }
+
